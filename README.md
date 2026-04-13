@@ -57,6 +57,7 @@ RELIC 支持收集以下类型的个人数据（根据隐私意愿自由选择�
 
 ```
 RELIC/
+├── skills.md              # 你的能力画像与个人风格定义
 ├── data/
 │   ├── raw/               # 原始数据（建议 .gitignore，不提交）
 │   ├── processed/         # 清洗、脱敏后的语料
@@ -111,10 +112,11 @@ python pipeline/clean/clean_text.py --input data/raw/ --output data/processed/
 python pipeline/augment/to_dialogue.py --input data/processed/ --output data/prompts/
 ```
 
-### 5. 微调模型（以 LoRA 为例）
+### 5. 训练模型（LoRA 只是可选项）
 
 ```bash
-python pipeline/train/finetune_lora.py \
+python pipeline/train/run_train.py \
+  --method "sft" \
   --base_model "Qwen/Qwen2.5-7B-Instruct" \
   --data_path  data/prompts/ \
   --output_dir model/checkpoints/relic-v1
@@ -134,7 +136,7 @@ python chat/cli_chat.py --model model/checkpoints/relic-v1
 |------|----------|
 | 基座模型 | Qwen2.5 / LLaMA-3 / Mistral |
 | 微调框架 | [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) / [Axolotl](https://github.com/axolotl-ai-cloud/axolotl) |
-| 参数高效微调 | LoRA / QLoRA |
+| 参数高效训练（可选） | LoRA / QLoRA |
 | 向量记忆 | [Chroma](https://www.trychroma.com/) / [Milvus](https://milvus.io/) |
 | 对话界面 | [Gradio](https://gradio.app/) / [Open WebUI](https://github.com/open-webui/open-webui) |
 | 模型存储 | [HuggingFace Hub](https://huggingface.co/) / Git LFS |
@@ -159,7 +161,7 @@ RELIC 不是为了复制一个人，而是为了**保留一个人思考问题的
 - [ ] 数据采集脚本（微信、微博、Notion 导出解析）
 - [ ] 数据清洗与脱敏工具
 - [ ] Prompt-Response 自动生成流水线
-- [ ] LoRA 微调一键脚本
+- [ ] 一键训练脚本（SFT / LoRA 可选）
 - [ ] 评估套件（风格相似度、困惑度、人工评估模板）
 - [ ] Web 对话界面
 - [ ] 记忆增强（RAG：用向量库检索你的历史语料）
