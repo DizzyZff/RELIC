@@ -57,7 +57,7 @@ RELIC 支持收集以下类型的个人数据（根据隐私意愿自由选择�
 
 ```
 RELIC/
-├── skills.md              # 你的能力画像与个人风格定义
+├── skills.md             # 你的能力画像与个人风格定义
 ├── data/
 │   ├── raw/               # 原始数据（建议 .gitignore，不提交）
 │   ├── processed/         # 清洗、脱敏后的语料
@@ -121,6 +121,10 @@ python pipeline/train/run_train.py \
   --data_path  data/prompts/ \
   --output_dir model/checkpoints/relic-v1
 ```
+
+可选 `--method`：
+- `sft`：标准监督微调流程
+- `lora`：LoRA 参数高效微调流程
 
 ### 6. 与你的赛博分身对话
 
